@@ -1,11 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
+from .models import Post
 
 
 def index(request):
     context = {
-        'message':'bu benim ilk mesajım',
-        'message2':'bu benim ikinci mesajım'
+        'posts':Post.objects.all()
     }
 
     return render(request,"posts/index.html",context = context)
+
+
+
+
+def detail(request,id):
+    post =get_object_or_404(Post, id=id)
+
+    context = {
+        'post':post
+    }
+
+    return render(request,"posts/detail.html",context=context)

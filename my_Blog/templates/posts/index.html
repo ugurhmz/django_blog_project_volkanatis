@@ -1,4 +1,5 @@
 <!doctype html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,13 +7,45 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesomeall.min.css' %}">
 </head>
 <body>
 
-<h1>Selamlar...</h1>
 
-<h1><p> {{ message }}</p></h1>
-<h1><p> {{ message2 }}</p></h1>
+
+<div class="container" style="padding-top:45px;padding-bottom:45px;">
+
+
+         {% for post in posts %}
+
+            <div class="card  mt-4 mx-auto" style="width:48rem;">
+                <img src="{{ post.image.url }}" class="rounded mx-auto d-block" style="width:60%">
+                    <div class="card-body">
+
+                            <h3 class="card-title"> {{ post.title }}</h3>
+                            <p class="card-text"> {{ post.content | truncatechars_html:200 }} </p>
+                            <p class="text-muted"> <small>{{ post.date }}</small></p>
+                            <p class="text-end">
+                                <a href="{% url 'detail' post.id %}" class=" btn btn-dark text-white">Detay</a>
+                            </p>
+
+                    </div>
+
+            </div>
+
+
+
+        {% endfor %}
+
+
+</div>
+
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
 
 </body>
 </html>
