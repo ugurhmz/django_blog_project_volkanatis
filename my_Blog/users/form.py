@@ -2,10 +2,9 @@ from django import forms
 from django.contrib.auth import authenticate
 
 
-class LoginForm(forms.ModelForm):
+class LoginForm(forms.Form):
     username = forms.CharField(max_length=100,label='Kullanıcı Adı')
-    password = forms.CharField(max_length=100,labeL="Şifre",widget=forms.PasswordInput) #forms.PasswordInput  -> Şifre olarak görünmesi için
-
+    password = forms.CharField(max_length=100,label='Şifre', widget=forms.PasswordInput)#forms.PasswordInput  -> Şifre olarak görünmesi için
 
 
     #formdan gelen bilgileri kontrol etme
@@ -20,6 +19,8 @@ class LoginForm(forms.ModelForm):
                 raise forms.ValidationError("Kullanıcı adı ya da şifre hatalı!")
 
             return super(LoginForm,self).clean()
+
+
 
 
 
