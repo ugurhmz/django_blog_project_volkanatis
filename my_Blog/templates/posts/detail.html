@@ -9,7 +9,7 @@
                     <h3 class="card-title"> {{ post.title }}</h3>
                     <p class="card-text"> {{ post.content}} </p>
                     <p class="text-muted"> <small>{{ post.date }}</small></p>
-
+                     <a href="{% url 'delete' post.id %}" class="btn btn-danger">Sil</a>
 
             </div>
 
