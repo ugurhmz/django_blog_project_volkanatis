@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, re
 from .forms import PostForm
 from .models import Post
 
-
+#-------------------------------------- index() _________________________________
 def index(request):
     context = {
         'posts':Post.objects.all().order_by('-id')
@@ -14,7 +14,7 @@ def index(request):
 
 
 
-
+#-------------------------------------- detail() _________________________________
 def detail(request,id):
     post =get_object_or_404(Post, id=id)
 
@@ -25,9 +25,9 @@ def detail(request,id):
     return render(request,"posts/detail.html",context=context)
 
 
-
+#-------------------------------------- create_post() _________________________________
 @login_required(login_url='/')
-def create_view(request):
+def create_post(request):
     form = PostForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
@@ -41,17 +41,31 @@ def create_view(request):
 
     return render(request,"posts/create.html",context=context )
 
-
+#-------------------------------------- delete_post() _________________________________
 @login_required(login_url='/')
-def delete_view(request,id):
+def delete_post(request,id):
     post = get_object_or_404(Post, id=id)
     post.delete()
 
     return redirect('/')
 
 
+#-------------------------------------- update_post() _________________________________
+@login_required(login_url='/')
+def update_post(request,id):
+    post=get_object_or_404(Post,id=id)
+    form = PostForm(request.POST or None, request.FILES or None, instance=post)
+
+    if form.is_valid():
+        post.save()
+        return HttpResponseRedirect(post.get_absolute_url())
+
+    context = {
+        'form':form
+    }
 
 
+    return render(request,'posts/create.html',context=context)
 
 
 

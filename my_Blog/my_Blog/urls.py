@@ -11,8 +11,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index, name='index'),
     path('detail/<int:id>', detail, name='detail'),
-    path('delete/<int:id>', delete_view, name='delete'),
-    path('create/', create_view, name='create'),
+    path('delete/<int:id>', delete_post, name='delete'),
+    path('update/<int:id>', update_post, name='update'),
+    path('create/', create_post, name='create'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
