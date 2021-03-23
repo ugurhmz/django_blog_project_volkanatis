@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, redirect
 
 from .forms import PostForm
@@ -8,9 +9,22 @@ from .models import Post
 #-------------------------------------- index() _________________________________
 def index(request):
     tum_postlar = Post.objects.all().order_by('-id')
-    paginator = Paginator(tum_postlar,2)
+    query = request.GET.get('arama')
+
+    if query:
+        tum_postlar = tum_postlar.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query)
+        ).distinct()
+
+    #paginator burda olmalı query sorun yaratmasın
+    paginator = Paginator(tum_postlar, 2)
     page = request.GET.get('page')
     tum_postlar = paginator.get_page(page)
+
+
+
+
 
 
     context = {
