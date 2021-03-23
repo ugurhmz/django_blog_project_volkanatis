@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, redirect
 
 from .forms import PostForm
@@ -6,8 +7,14 @@ from .models import Post
 
 #-------------------------------------- index() _________________________________
 def index(request):
+    tum_postlar = Post.objects.all().order_by('-id')
+    paginator = Paginator(tum_postlar,2)
+    page = request.GET.get('page')
+    tum_postlar = paginator.get_page(page)
+
+
     context = {
-        'posts':Post.objects.all().order_by('-id')
+        'tum_postlar':tum_postlar
     }
 
     return render(request,"posts/index.html",context = context)
