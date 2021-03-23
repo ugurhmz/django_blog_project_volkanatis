@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from .form import LoginForm, RegisterForm
@@ -74,35 +75,12 @@ def register_view(request):
     return render(request,'users/register.html', context=context)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #________________________________________ logout_view() ________________________________________
 
 def logout_view(request):
     logout(request)
 
+    messages.success(request,"Başarılı bir şekilde çıkış yaptınız")
     return redirect('index')
 
 

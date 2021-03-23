@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -21,9 +22,6 @@ def index(request):
     paginator = Paginator(tum_postlar, 2)
     page = request.GET.get('page')
     tum_postlar = paginator.get_page(page)
-
-
-
 
 
 
@@ -53,6 +51,7 @@ def create_post(request):
 
     if form.is_valid():
         post = form.save()
+        messages.success(request,"Yazınız başarıyla oluşturuldu")
         return HttpResponseRedirect(post.get_absolute_url())
 
 
